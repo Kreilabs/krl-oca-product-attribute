@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[pos_product_cost_security](pos_product_cost_security/) | 19.0.1.0.0 |  | Compatibility between Point of Sale and Product Cost Security
 [product_attribute_archive](product_attribute_archive/) | 19.0.1.0.0 |  | Add an active field on product attributes
 [product_attribute_value_avoid_auto_fill](product_attribute_value_avoid_auto_fill/) | 19.0.1.0.0 |  | Add option allow filling automatically the values
 [product_category_active](product_category_active/) | 19.0.1.0.0 |  | Add option to archive product categories
