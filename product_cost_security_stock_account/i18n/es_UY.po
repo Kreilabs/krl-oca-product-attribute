@@ -1,0 +1,18 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_cost_security_stock_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Language: es_UY\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_cost_security_stock_account
+#. odoo-python
+#: code:addons/product_cost_security_stock_account/models/ir_actions.py:0
+msgid "You are not allowed to access inventory valuation reports."
+msgstr "No tiene permiso para acceder a los informes de valorización de inventario."
