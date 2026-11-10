@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import AccessError
-from odoo.tests import new_test_user, users
+from odoo.tests import new_test_user, tagged, users
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -297,6 +297,41 @@ class TestProductCostSecurityStockAccount(BaseCommon):
         self.assertEqual(visible[0]["name"], "LOT-CTX")
         self.assertNotIn("standard_price", visible[0])
         self.assertEqual(lot.sudo().standard_price, 15.0)
+
+    @tagged("post_install", "-at_install")
+    def test_cogs_value_without_cost_group(self):
+        user = new_test_user(
+            self.env,
+            login="cogs_no_cost",
+            groups="account.group_account_invoice,stock.group_stock_user",
+        )
+        journal = self.env["account.journal"].sudo().search(
+            [("type", "=", "sale"), ("company_id", "=", self.env.company.id)],
+            limit=1,
+        )
+        self.assertTrue(journal)
+        move = self.env["account.move"].sudo().create(
+            {
+                "move_type": "out_invoice",
+                "partner_id": self.partner.id,
+                "journal_id": journal.id,
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product.id,
+                            "quantity": 1,
+                            "price_unit": 10,
+                        },
+                    )
+                ],
+            }
+        )
+        line = move.invoice_line_ids
+        self.assertAlmostEqual(line.with_user(user)._get_cogs_value(), 5.0)
+        with self.assertRaises(AccessError):
+            self.product.with_user(user).read(["standard_price"])
 
     def test_lot_manual_cost_requires_edit_group(self):
         """Creating or writing a lot cost is forbidden without the edit group."""

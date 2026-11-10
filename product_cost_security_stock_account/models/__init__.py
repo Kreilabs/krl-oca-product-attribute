@@ -1,3 +1,4 @@
+from . import account_move_line
 from . import ir_actions
 from . import product
 from . import stock_forecasted
